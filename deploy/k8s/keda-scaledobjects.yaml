@@ -1,0 +1,51 @@
+apiVersion: keda.sh/v1alpha1
+kind: ScaledObject
+metadata:
+  name: normalizer-consumer-scaler
+  namespace: defence-cyber-portal
+spec:
+  scaleTargetRef:
+    name: event-normalizer-deployment
+  minReplicaCount: 2
+  maxReplicaCount: 12
+  cooldownPeriod: 600
+  pollingInterval: 15
+  advanced:
+    horizontalPodAutoscalerConfig:
+      behavior:
+        scaleUp:
+          stabilizationWindowSeconds: 0
+          policies:
+            - type: Percent
+              value: 100
+              periodSeconds: 15
+        scaleDown:
+          stabilizationWindowSeconds: 600
+  triggers:
+    - type: kafka
+      metadata:
+        bootstrapServers: redpanda-cluster.eventbus.svc.cluster.local:9092
+        consumerGroup: normalizer-group
+        topic: security.ingress.raw.v1
+        lagThreshold: "500"
+        activationLagThreshold: "50"
+---
+apiVersion: keda.sh/v1alpha1
+kind: ScaledObject
+metadata:
+  name: threat-detection-scaler
+  namespace: defence-cyber-portal
+spec:
+  scaleTargetRef:
+    name: threat-detection-deployment
+  minReplicaCount: 2
+  maxReplicaCount: 12
+  cooldownPeriod: 600
+  pollingInterval: 10
+  triggers:
+    - type: kafka
+      metadata:
+        bootstrapServers: redpanda-cluster.eventbus.svc.cluster.local:9092
+        consumerGroup: detection-rule-group
+        topic: security.alert.received.v1
+        lagThreshold: "200"

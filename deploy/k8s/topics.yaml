@@ -1,0 +1,79 @@
+apiVersion: redpanda.vectorized.io/v1alpha1
+kind: Topic
+metadata:
+  name: security-ingress-raw-v1
+  namespace: eventbus
+spec:
+  partitions: 12
+  replicationFactor: 3
+  additionalConfig:
+    retention.ms: "604800000" # 7 days
+    cleanup.policy: "delete"
+    min.insync.replicas: "2"
+---
+apiVersion: redpanda.vectorized.io/v1alpha1
+kind: Topic
+metadata:
+  name: security-alert-received-v1
+  namespace: eventbus
+spec:
+  partitions: 12
+  replicationFactor: 3
+  additionalConfig:
+    retention.ms: "2592000000" # 30 days
+    min.insync.replicas: "2"
+---
+apiVersion: redpanda.vectorized.io/v1alpha1
+kind: Topic
+metadata:
+  name: security-alert-correlated-v1
+  namespace: eventbus
+spec:
+  partitions: 12
+  replicationFactor: 3
+  additionalConfig:
+    retention.ms: "2592000000" # 30 days
+---
+apiVersion: redpanda.vectorized.io/v1alpha1
+kind: Topic
+metadata:
+  name: security-incident-lifecycle-v1
+  namespace: eventbus
+spec:
+  partitions: 6
+  replicationFactor: 3
+  additionalConfig:
+    retention.ms: "31536000000" # 1 year
+---
+apiVersion: redpanda.vectorized.io/v1alpha1
+kind: Topic
+metadata:
+  name: security-response-action-v1
+  namespace: eventbus
+spec:
+  partitions: 6
+  replicationFactor: 3
+  additionalConfig:
+    retention.ms: "31536000000" # 1 year
+---
+apiVersion: redpanda.vectorized.io/v1alpha1
+kind: Topic
+metadata:
+  name: security-audit-v1
+  namespace: eventbus
+spec:
+  partitions: 6
+  replicationFactor: 3
+  additionalConfig:
+    retention.ms: "220752000000" # 7 years
+---
+apiVersion: redpanda.vectorized.io/v1alpha1
+kind: Topic
+metadata:
+  name: security-quarantine-v1
+  namespace: eventbus
+spec:
+  partitions: 3
+  replicationFactor: 3
+  additionalConfig:
+    retention.ms: "2592000000" # 30 days

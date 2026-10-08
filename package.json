@@ -1,0 +1,27 @@
+{
+  "name": "defence-cyber-portal",
+  "version": "1.0.0",
+  "description": "Defence Cyber Portal - Integrated Cybersecurity Operations & Incident Management Platform",
+  "main": "server/server.js",
+  "type": "commonjs",
+  "scripts": {
+    "start": "node server/server.js",
+    "test": "node tests/run_all_tests.js"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.21.2",
+    "ws": "^8.18.0"
+  },
+  "keywords": [
+    "soc",
+    "siem",
+    "edr",
+    "threat-detection",
+    "playbooks",
+    "soar",
+    "incident-management"
+  ],
+  "author": "Defence Cyber Portal Engineering",
+  "license": "Apache-2.0"
+}
